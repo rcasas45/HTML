@@ -1,0 +1,164 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Plantilla</title>
+	<link rel="stylesheet" type="text/css" href="style.css" media="screen" />
+   
+	<script>
+        var years = []
+        var subtotales = []
+        var impuestos = []
+        var totales = []
+        var comprobados = []
+
+        function Mostrar(){
+            document.getElementById("tabla").innerHTML = ""
+            for(var i = 0; i < years.length; i++){
+                document.getElementById("tabla").innerHTML += "<tr>" +
+                "<td>" + years[i] *1 + "</td>" +
+                "<td>" + subtotales[i] *1 + "</td>" +
+                "<td>" + impuestos[i] * 1 + "</td>" +
+                "<td>" + totales[i] + "</td>" +
+                "<td>" + comprobados[i] + "</td>" + "</tr>"
+
+            }
+        }
+
+        function Agregar(){
+            var info = document.getElementById("input1").value
+            var splitted_info = info.split("-")
+
+            years.push(splitted_info[0] * 1)
+            subtotales.push(splitted_info[1] * 1)
+            impuestos.push(splitted_info[2] * 1)
+            totales.push(  (splitted_info[1] * 1/100 * impuestos[impuestos.length - 1]).toFixed(2) *1)
+            comprobados.push(splitted_info[3])
+
+            Mostrar()
+        }
+
+        function Borrar(){
+          var posicion = document.getElementById("input2").value * 1;
+
+          years.splice(posicion,1);
+          subtotales.splice(posicion,1);
+          impuestos.splice(posicion,1);
+          totales.splice(posicion,1);
+          comprobados.splice(posicion,1);
+
+          Mostrar()
+        }
+
+        function Promedio(){
+          var total = 0;
+          for(var i = 0; i < totales.length; i++){
+            total += totales[i]
+          }
+
+
+          var promedio = total / totales.length;
+          document.getElementById("answerBox").innerHTML = promedio.toFixed(2)
+
+        }
+
+        function TransaccionesComprobadas(){
+          var cantidad = 0
+          for(var i = 0; i < comprobados.length; i++){
+            if(comprobados[i] == "Si"){
+              cantidad++
+            }
+          }
+          document.getElementById("answerBox").innerHTML = cantidad
+
+        }
+
+
+        function SumaTotales(){
+          var total = 0;
+          for(var i = 0; i < totales.length; i++){
+            total += totales[i]
+          }
+          document.getElementById("answerBox").innerHTML = total
+
+        }
+
+        function SubtotalMasAlto(){
+          var maximo = 0;
+          for(var i = 0; i < subtotales.length; i++){
+            if(subtotales[i] > maximo){
+              maximo = subtotales[i]
+            }
+          }
+          document.getElementById("answerBox").innerHTML = maximo
+
+        }
+        
+	</script>
+
+</head>
+
+<body>
+	<div class="all">
+		<div class="twothirds">
+			<div class="answers" id="Title">
+				BanTec
+			</div>
+			<div class="container">
+				<h1>Transacciones</h1>
+				<table style="color:black">
+					<tr style="color:black">
+						<th class="table-header" style="color:black">Año</th>
+						<th class="table-header" style="color:black">Subtotal</th>
+						<th class="table-header" style="color:black">Porcentaje de Impuesto</th>
+						<th class="table-header" style="color:black">Total</th>
+						<th class="table-header" style="color:black">Comprobado</th>
+          </tr>
+        </table>
+				<table style="color:black" id="tabla">
+
+        </table>
+      </div>
+    </div>
+    <div class="informacion">
+      <div class="input-div" style="margin-top:200px">
+        <label class="margins">Ingresar Transacción</label>
+        <input type="text" id="input1" class="margins"> 
+        <button class="agregar margins" onclick="Agregar()"> Agregar </button>
+      </div>
+      <div class="input-div">
+        <label class="margins">Borrar Transacción</label>
+        <input type="text" id="input2" class="margins"> 
+        <button class="agregar margins" onclick="Borrar()"> Borrar </button>
+      </div>
+      <div class="input-div">
+        <label class="margins">Input 3</label>
+        <input type="text" id="input3" class="margins"> 
+        <button class="agregar margins" > Input 3 </button>
+      </div>
+      <div class="input-div">
+        <label class="margins">input4</label>
+        <input type="text" id="input4" class="margins"> 
+        <button class="agregar margins"> Button 4 </button>
+      </div>
+      <div class="input-div">
+        <label class="margins">input4</label>
+        <input type="text" id="input4" class="margins"> 
+        <button class="agregar margins"> Button 5 </button>
+      </div>
+      <div class="answerBox" id="answerBox">
+        0
+      </div>
+    </div>
+    <div class="bigbuttons">
+      <div class="buttons">
+        <button class="promedio margins" onclick="Promedio()"> Obtener promedio </button>
+        <button class="promedio margins" onclick="TransaccionesComprobadas()"> Transacciones comprobadas </button>
+        <button class="promedio margins" onclick="SumaTotales()"> Suma de totales </button>
+        <button class="promedio margins" onclick="SubtotalMasAlto()"> Subtotal Mas Alto </button>
+      </div>
+    </div>
+
+	</div>
+</body>
+</html>
